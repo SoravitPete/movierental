@@ -22,3 +22,5 @@ class Rental:
 
 	def get_days_rented(self):
 		return self.days_rented
+
+
