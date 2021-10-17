@@ -39,9 +39,9 @@ class Customer:
 
         for rental in self.rentals:
             # compute rental change
-            amount = self.get_amount(rental)
+            amount = rental.get_price()
             # award renter points
-            frequent_renter_points = self.get_frequent_renter_points(frequent_renter_points, rental)
+            frequent_renter_points = rental.get_frequent_renter_points()
             #  add detail line to statement
             statement += fmt.format(rental.get_movie().get_title(), rental.get_days_rented(), amount)
             # and accumulate activity
@@ -55,35 +55,9 @@ class Customer:
 
         return statement
 
-    def get_frequent_renter_points(self, frequent_renter_points, rental):
-        """Get frequent renter point."""
-        if rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-            frequent_renter_points += rental.get_days_rented()
-        else:
-            frequent_renter_points += 1
-        return frequent_renter_points
 
-    def get_amount(self, rental):
-        """Get amount of rental."""
-        amount = 0
-        if rental.get_movie().get_price_code() == Movie.REGULAR:
-            # Two days for $2, additional days 1.50 each.
-            amount = 2.0
-            if rental.get_days_rented() > 2:
-                amount += 1.5 * (rental.get_days_rented() - 2)
-        elif rental.get_movie().get_price_code() == Movie.CHILDRENS:
-            # Three days for $1.50, additional days 1.50 each.
-            amount = 1.5
-            if rental.get_days_rented() > 3:
-                amount += 1.5 * (rental.get_days_rented() - 3)
-        elif rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-            # Straight per day charge
-            amount = 3 * rental.get_days_rented()
-        else:
-            log = logging.getLogger()
-            log.error(
-                f"Movie {rental.get_movie()} has unrecognized priceCode {rental.get_movie().get_price_code()}")
-        return amount
+
+
 
 
 if __name__ == "__main__":
