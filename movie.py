@@ -1,8 +1,10 @@
+"""Manage Movie and PriceCode class."""
 from enum import Enum
 
 
 class PriceCode(Enum):
-    """An enumeration for different kinds of movies and their behavior"""
+    """An enumeration for different kinds of movies and their behavior."""
+
     new_release = {"price": lambda days: 3.0 * days,
                    "frp": lambda days: days
                    }

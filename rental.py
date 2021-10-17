@@ -1,4 +1,6 @@
+"""Manage rental of the movie."""
 from movie import PriceCode
+
 
 class Rental:
     """
@@ -13,8 +15,10 @@ class Rental:
     """
 
     def __init__(self, movie, days_rented):
-        """Initialize a new movie rental object for
-           a movie with known rental period (daysRented).
+        """
+        Initialize a new movie rental object for a movie.
+
+        with known rental period (daysRented).
         """
         if not isinstance(movie.get_price_code(), PriceCode):
             raise TypeError("Unrecognized priceCode.")
@@ -22,9 +26,11 @@ class Rental:
         self.days_rented = days_rented
 
     def get_movie(self):
+        """Get movie object."""
         return self.movie
 
     def get_days_rented(self):
+        """Get day rented that client rent the movie."""
         return self.days_rented
 
     def get_frequent_renter_points(self):
