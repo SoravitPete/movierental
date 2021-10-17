@@ -1,3 +1,5 @@
+from movie import PriceCode
+
 class Rental:
     """
     A rental of a movie by customer.
@@ -14,6 +16,8 @@ class Rental:
         """Initialize a new movie rental object for
            a movie with known rental period (daysRented).
         """
+        if not isinstance(movie.get_price_code(), PriceCode):
+            raise TypeError("Unrecognized priceCode.")
         self.movie = movie
         self.days_rented = days_rented
 
