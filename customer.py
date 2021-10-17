@@ -56,10 +56,6 @@ class Customer:
         return statement
 
 
-
-
-
-
 if __name__ == "__main__":
     customer = Customer("Edward Snowden")
     print(customer.statement())
