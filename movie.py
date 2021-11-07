@@ -1,6 +1,8 @@
 """Manage Movie and PriceCode class."""
 from typing import List
 
+import csv
+
 
 class Movie:
     """
@@ -36,3 +38,22 @@ class Movie:
 
     def __str__(self):
         return self._title
+
+
+class MovieCatalog:
+    source = 'movie.csv'
+
+    def __init__(self):
+        self.movie_list = {}
+        with open(self.source) as file:
+            reader = csv.DictReader(file)
+        for each_movie in reader:
+            self.movie_list[each_movie["title"]] = {
+                "#id": each_movie["#id"],
+                "year": each_movie["year"],
+                "genre": [genre for genre in each_movie["genres"].split("|")]
+            }
+
+    def get_movie(self, title):
+        movie_list = self.movie_list[title]
+        return Movie(title, movie_list["year"], movie_list["genre"])
