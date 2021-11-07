@@ -1,8 +1,8 @@
 import re
 import unittest
 from customer import Customer
-from rental import Rental
-from movie import Movie, PriceCode
+from rental import Rental, PriceCode
+from movie import Movie
 
 
 class CustomerTest(unittest.TestCase):
@@ -10,14 +10,14 @@ class CustomerTest(unittest.TestCase):
 
     def setUp(self):
         """Test fixture contains:
-
         c = a customer
         movies = list of some movies
         """
         self.c = Customer("Movie Mogul")
-        self.new_movie = Movie("Mulan", PriceCode.new_release)
-        self.regular_movie = Movie("CitizenFour", PriceCode.regular)
-        self.childrens_movie = Movie("Frozen", PriceCode.childrens)
+        self.new_movie = Movie("Mulan", 2020, ["Action", "Adventure", "Children"], PriceCode.new_release)
+        self.regular_movie = Movie("Jurassic World", 2015, ["Action", "Adventure", "Drama", "Sci-Fi", "Thriller"],
+                                   PriceCode.regular)
+        self.children_movie = Movie("Weathering With You", 2020, ["Animation", "Drama", "Children"], PriceCode.children)
 
     @unittest.skip("No convenient way to test")
     def test_billing():

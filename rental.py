@@ -1,5 +1,8 @@
 """Manage rental of the movie."""
 from enum import Enum
+from movie import Movie
+
+from datetime import datetime
 
 
 class Rental:
@@ -41,6 +44,14 @@ class Rental:
         """Get amount of rental."""
         return self.movie.get_price_code().price(self.days_rented)
 
+    def for_movie(self, movie: Movie):
+        current_year = datetime.now().year
+        if current_year == movie.get_year():
+            return PriceCode.new_release
+        if movie.is_genre("Children"):
+            return PriceCode.children
+        return PriceCode.regular
+
 
 class PriceCode(Enum):
     """An enumeration for different kinds of movies and their behavior."""
@@ -51,7 +62,7 @@ class PriceCode(Enum):
     regular = {"price": lambda days: 2.0 + 1.5 * max(0, days - 2),
                "frp": lambda days: 1
                }
-    childrens = {"price": lambda days: 1.5 + 1.5 * max(0, days - 3),
+    children = {"price": lambda days: 1.5 + 1.5 * max(0, days - 3),
                  "frp": lambda days: 1
                  }
 
