@@ -1,5 +1,5 @@
 """Manage rental of the movie."""
-from movie import PriceCode
+from enum import Enum
 
 
 class Rental:
@@ -40,3 +40,25 @@ class Rental:
     def get_price(self):
         """Get amount of rental."""
         return self.movie.get_price_code().price(self.days_rented)
+
+
+class PriceCode(Enum):
+    """An enumeration for different kinds of movies and their behavior."""
+
+    new_release = {"price": lambda days: 3.0 * days,
+                   "frp": lambda days: days
+                   }
+    regular = {"price": lambda days: 2.0 + 1.5 * max(0, days - 2),
+               "frp": lambda days: 1
+               }
+    childrens = {"price": lambda days: 1.5 + 1.5 * max(0, days - 3),
+                 "frp": lambda days: 1
+                 }
+
+    def get_renter_point(self, day_rented):
+        return self.value["frp"](day_rented)
+
+    def price(self, days: int) -> float:
+        "Return the rental price for a given number of days"""
+        pricing = self.value["price"]  # the enum member's price formula
+        return pricing(days)
